@@ -18,7 +18,7 @@ def countPulse(channel):
 
 def coutPulse1s():
     startTime = time.time()
-    if()
+    #if()
     currentTime = time.time()
 
 
