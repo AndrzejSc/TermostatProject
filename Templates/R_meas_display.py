@@ -8,7 +8,6 @@ tm1 = tm1637.TM1637(clk=21, dio = 20)
 tm1.numbers(88, 88)     # Test wyświetlacza
 tm2 = tm1637.TM1637(clk=16, dio = 12)
 tm2.numbers(88, 88)     # Test wyświetlacza
-www = 1
 
 spi = busio.SPI(board.SCK, MOSI=board.MOSI, MISO=board.MISO)
 cs1 = digitalio.DigitalInOut(board.D5)  # Chip select of the MAX31865 board.
@@ -29,14 +28,15 @@ while True:
 
     time.sleep(1)
 
-    aaa=str(round(sensor1.temperature))
-    bbb=str(round(sensor2.temperature))
-    secondDigitColon1 = tm1.encode_digit(int(aaa[1]))+128
-    secondDigitColon2 = tm2.encode_digit(int(bbb[1]))+128
+    # Wyświetlenie temperatury oraz dwukropka
+    T1_arr=str(round(sensor1.temperature))
+    T2_arr=str(round(sensor2.temperature))
+    secondDigitColon1 = tm1.encode_digit(int(T1_arr[1])) + 128
+    secondDigitColon2 = tm2.encode_digit(int(T2_arr[1])) + 128
     #print(bin(int(aaa[1])))
     #print(bin(secondDigitColon1))
     #print(tm1.encode_digit(int(aaa[0])))
-    tm1.write([tm1.encode_digit(int(aaa[0])), secondDigitColon1, 99, 57])
-    tm2.write([tm2.encode_digit(int(bbb[0])), secondDigitColon2, 99, 57])
+    tm1.write([tm1.encode_digit(int(T1_arr[0])), secondDigitColon1, 99, 57])
+    tm2.write([tm2.encode_digit(int(T2_arr[0])), secondDigitColon2, 99, 57])
     
     time.sleep(1)
